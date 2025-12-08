@@ -1,0 +1,137 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --primary: #D4AF37;
+  --secondary-green: #009246;
+  --secondary-red: #CE2B37;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary-green: var(--secondary-green);
+  --color-secondary-red: var(--secondary-red);
+
+  --font-heading: var(--font-oswald);
+  --font-body: var(--font-inter);
+
+  --animate-marquee: marquee 30s linear infinite;
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+}
+
+@layer utilities {
+
+  /* Valorant Glitch Text Shadow Effect */
+  @keyframes valorant-text-glitch {
+    0% {
+      text-shadow: 2px 2px 0px #00ffff, -2px -2px 0px #ff0055;
+      transform: translate(0);
+    }
+
+    2% {
+      text-shadow: -2px -2px 0px #00ffff, 2px 2px 0px #ff0055;
+      transform: translate(-1px, 1px);
+    }
+
+    4% {
+      text-shadow: 2px -2px 0px #00ffff, -2px 2px 0px #ff0055;
+      transform: translate(1px, -1px);
+    }
+
+    6% {
+      text-shadow: none;
+      transform: translate(0);
+    }
+
+    100% {
+      text-shadow: none;
+      transform: translate(0);
+    }
+  }
+
+  .valorant-glitch {
+    position: relative;
+    /* Intermittent glitch */
+    animation: valorant-text-glitch 6s infinite steps(1);
+  }
+
+  /* New Color Glitch Animations */
+  @keyframes valorant-color-text {
+
+    0%,
+    6% {
+      color: #c6333e;
+    }
+
+    6.1%,
+    100% {
+      color: var(--primary);
+    }
+  }
+
+  @keyframes valorant-overlay-flash {
+
+    0%,
+    6% {
+      opacity: 1;
+    }
+
+    6.1%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  .glitch-text-color {
+    animation: valorant-color-text 6s infinite steps(1);
+  }
+
+  /* Overlay glitch that doesn't break hover/transparency */
+  .glitch-red-overlay {
+    position: relative;
+    /* isolation: isolate;  -- might help if stacking issues occur */
+  }
+
+  .glitch-red-overlay::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: #c6333e;
+    /* Ensure z-index is lower than text but creates layer */
+    /* Since we want it OVER the transparent bg but UNDER the text? 
+       If parent is relative, z-1 puts it on top... unless parent has text.
+       Usually text is content. ::before is child.
+       If z-index is -1, it goes behind parent background.
+       But parent bg is transparent. So we see it.
+       If parent bg (on hover) is white, it covers ::before. This is desired.
+    */
+    z-index: -1;
+    opacity: 0;
+    animation: valorant-overlay-flash 6s infinite steps(1);
+    /* Match the clip-path of the parent */
+    clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
+  }
+
+  /* Clip Path Utility for Valorant Buttons */
+  .clip-valorant {
+    clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
+  }
+}
