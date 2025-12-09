@@ -134,4 +134,8 @@ body {
   .clip-valorant {
     clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
   }
+
+  .clip-valorant-y {
+    clip-path: polygon(0 0, 100% 5%, 100% 100%, 0 95%);
+  }
 }

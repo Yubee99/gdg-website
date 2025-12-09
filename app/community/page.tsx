@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { User, Twitch, Shield, ArrowRight, Crown, Star } from "lucide-react";
+import { User, Twitch, Shield, ArrowRight, Crown, Star, Zap } from "lucide-react";
 import { getTwitchBroadcasters, StreamerInfo } from "../../lib/twitch";
 import { StreamerGrid } from "../../components/StreamerGrid";
 
@@ -32,6 +32,10 @@ const coFounders = [
 
 const staffList = [
     { name: "mario89anubis", role: "Staff" },
+];
+
+const coachesList = [
+    { name: "Andrixx___", role: "Coach" },
 ];
 
 export default async function CommunityPage() {
@@ -91,10 +95,17 @@ export default async function CommunityPage() {
                 <div className="mb-20">
                     <h2 className="text-3xl md:text-4xl font-heading font-bold text-left mb-8 uppercase flex items-center gap-3">
                         <User className="w-8 h-8 text-primary" />
-                        Partner <span className="text-primary">Ufficiali</span>
+                        Partner & <span className="text-primary">Coach Ufficiali</span>
                     </h2>
                     {partnerList.length > 0 ? (
-                        <StreamerGrid streamers={streamers.filter(s => partnerList.includes(s.login.toLowerCase()))} defaultVariant="partner" />
+                        <StreamerGrid
+                            streamers={streamers.filter(s => partnerList.includes(s.login.toLowerCase()))}
+                            defaultVariant="partner"
+                            onGetVariant={(s) => {
+                                if (s.login.toLowerCase() === 'andrixx___') return 'partner-coach';
+                                return 'partner';
+                            }}
+                        />
                     ) : (
                         <div className="text-zinc-500 text-sm italic border border-dashed border-zinc-800 p-6 rounded-sm">
                             Nessun partner attivo al momento.
@@ -149,6 +160,24 @@ export default async function CommunityPage() {
                                     </div>
                                     <div className="text-left">
                                         <h4 className="font-heading font-bold text-white tracking-wide group-hover:text-zinc-300 transition-colors">{member.name}</h4>
+                                        <p className="text-xs text-zinc-500 uppercase tracking-wider font-bold">{member.role}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* COACHES */}
+                    <div className="mb-12">
+                        <h3 className="text-xl font-heading font-bold text-center mb-6 uppercase tracking-wider text-indigo-400">Coach</h3>
+                        <div className="flex flex-wrap justify-center gap-6 md:gap-8 max-w-6xl mx-auto">
+                            {coachesList.map((member, idx) => (
+                                <div key={idx} className="flex items-center gap-4 bg-zinc-900/50 border border-zinc-800 p-4 pr-8 rounded-sm hover:border-indigo-500/50 transition-all duration-300 group min-w-[280px]">
+                                    <div className="w-12 h-12 bg-zinc-800 rounded-lg flex items-center justify-center border border-zinc-700 group-hover:border-indigo-500/40 transition-colors">
+                                        <Zap className="w-5 h-5 text-zinc-400 group-hover:text-indigo-500 transition-colors" />
+                                    </div>
+                                    <div className="text-left">
+                                        <h4 className="font-heading font-bold text-white tracking-wide group-hover:text-indigo-400 transition-colors">{member.name}</h4>
                                         <p className="text-xs text-zinc-500 uppercase tracking-wider font-bold">{member.role}</p>
                                     </div>
                                 </div>

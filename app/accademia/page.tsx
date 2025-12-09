@@ -1,7 +1,13 @@
 import Link from "next/link";
 import { Target, Video, TrendingUp, ArrowRight, User } from "lucide-react";
+import { getTwitchBroadcasters } from "../../lib/twitch";
 
-export default function AccademiaPage() {
+export default async function AccademiaPage() {
+    // Fetch Coach Data directly from Twitch API to ensure up-to-date profile picture
+    const streamersData = await getTwitchBroadcasters(["andrixx___"]);
+    const coachAndrixx = streamersData.find(s => s.login.toLowerCase() === "andrixx___");
+    const profileImage = coachAndrixx?.profileImageUrl;
+
     return (
         <div className="min-h-screen bg-black text-white font-sans selection:bg-primary selection:text-black">
 
@@ -72,45 +78,25 @@ export default function AccademiaPage() {
                         I Nostri <span className="text-primary">Coach</span>
                     </h2>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-5xl mx-auto">
-                        {/* Coach Placeholder 1 */}
+                    <div className="flex justify-center max-w-5xl mx-auto">
+                        {/* Single Coach: Andrixx___ */}
                         <div className="flex flex-col items-center text-center gap-4">
-                            <div className="w-32 h-32 bg-zinc-800 rounded-full border-2 border-primary/30 flex items-center justify-center overflow-hidden">
-                                <User className="w-12 h-12 text-zinc-600" />
+                            <div className="w-40 h-40 bg-zinc-800 rounded-full border-2 border-primary/30 flex items-center justify-center overflow-hidden relative">
+                                {profileImage ? (
+                                    <img
+                                        src={profileImage}
+                                        alt="Andrixx___"
+                                        className="w-full h-full object-cover"
+                                    />
+                                ) : (
+                                    <User className="w-16 h-16 text-zinc-600" />
+                                )}
                             </div>
                             <div>
-                                <h4 className="text-2xl font-heading font-bold text-white">Coach Viper</h4>
-                                <p className="text-primary font-bold text-sm tracking-wider uppercase mb-1">Controller Specialist</p>
-                                <span className="inline-block bg-zinc-800 text-zinc-300 text-xs px-3 py-1 rounded-full border border-white/10">
-                                    Immortale 3
-                                </span>
-                            </div>
-                        </div>
-
-                        {/* Coach Placeholder 2 */}
-                        <div className="flex flex-col items-center text-center gap-4">
-                            <div className="w-32 h-32 bg-zinc-800 rounded-full border-2 border-primary/30 flex items-center justify-center overflow-hidden">
-                                <User className="w-12 h-12 text-zinc-600" />
-                            </div>
-                            <div>
-                                <h4 className="text-2xl font-heading font-bold text-white">Coach Jett</h4>
-                                <p className="text-primary font-bold text-sm tracking-wider uppercase mb-1">Duelist / Entry</p>
-                                <span className="inline-block bg-zinc-800 text-zinc-300 text-xs px-3 py-1 rounded-full border border-white/10">
-                                    Radiante
-                                </span>
-                            </div>
-                        </div>
-
-                        {/* Coach Placeholder 3 */}
-                        <div className="flex flex-col items-center text-center gap-4">
-                            <div className="w-32 h-32 bg-zinc-800 rounded-full border-2 border-primary/30 flex items-center justify-center overflow-hidden">
-                                <User className="w-12 h-12 text-zinc-600" />
-                            </div>
-                            <div>
-                                <h4 className="text-2xl font-heading font-bold text-white">Coach Sova</h4>
-                                <p className="text-primary font-bold text-sm tracking-wider uppercase mb-1">Initiator / IGL</p>
-                                <span className="inline-block bg-zinc-800 text-zinc-300 text-xs px-3 py-1 rounded-full border border-white/10">
-                                    Immortale 2
+                                <h4 className="text-3xl font-heading font-bold text-white">Andrixx___</h4>
+                                <p className="text-primary font-bold text-base tracking-wider uppercase mb-2">Head Coach</p>
+                                <span className="inline-block bg-zinc-800 text-zinc-300 text-sm px-4 py-2 rounded-full border border-white/10 font-bold">
+                                    Immortal 1
                                 </span>
                             </div>
                         </div>

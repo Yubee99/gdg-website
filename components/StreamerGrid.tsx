@@ -4,8 +4,8 @@ import { StreamerInfo } from "@/lib/twitch";
 
 interface StreamerGridProps {
     streamers: StreamerInfo[];
-    defaultVariant?: 'founder' | 'partner' | 'creator' | 'co-founder';
-    onGetVariant?: (streamer: StreamerInfo) => 'founder' | 'partner' | 'creator' | 'co-founder' | undefined;
+    defaultVariant?: 'founder' | 'partner' | 'creator' | 'co-founder' | 'partner-coach';
+    onGetVariant?: (streamer: StreamerInfo) => 'founder' | 'partner' | 'creator' | 'co-founder' | 'partner-coach' | undefined;
 }
 
 export function StreamerGrid({ streamers, defaultVariant = 'creator', onGetVariant }: StreamerGridProps) {
@@ -36,6 +36,20 @@ export function StreamerGrid({ streamers, defaultVariant = 'creator', onGetVaria
                 </div>
             );
         }
+        if (variant === 'partner-coach') {
+            return (
+                <div className="absolute top-2 right-2 flex flex-col items-end gap-1">
+                    <div className="flex items-center gap-1 bg-primary/20 border border-primary/50 px-2 py-1 rounded text-[10px] uppercase font-bold text-primary tracking-wider shadow-[0_0_10px_rgba(212,175,55,0.2)]">
+                        <Star className="w-3 h-3" />
+                        <span>Partner</span>
+                    </div>
+                    <div className="flex items-center gap-1 bg-indigo-500/20 border border-indigo-500/50 px-2 py-1 rounded text-[10px] uppercase font-bold text-indigo-400 tracking-wider shadow-[0_0_10px_rgba(99,102,241,0.2)]">
+                        <Zap className="w-3 h-3" />
+                        <span>Coach</span>
+                    </div>
+                </div>
+            );
+        }
         return null;
     };
 
@@ -43,7 +57,7 @@ export function StreamerGrid({ streamers, defaultVariant = 'creator', onGetVaria
         if (isLive) return "border-red-500 shadow-[0_0_15px_rgba(239,68,68,0.2)]";
         if (variant === 'founder') return "border-yellow-500/30 hover:border-yellow-500 hover:shadow-[0_0_20px_rgba(234,179,8,0.15)]";
         if (variant === 'co-founder') return "border-zinc-500/30 hover:border-zinc-400 hover:shadow-[0_0_15px_rgba(161,161,170,0.15)]";
-        if (variant === 'partner') return "border-primary/30 hover:border-primary hover:shadow-[0_0_15px_rgba(212,175,55,0.15)]";
+        if (variant === 'partner' || variant === 'partner-coach') return "border-primary/30 hover:border-primary hover:shadow-[0_0_15px_rgba(212,175,55,0.15)]";
         return "border-zinc-800 hover:border-zinc-600";
     };
 
