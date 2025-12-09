@@ -2,6 +2,8 @@ import Link from "next/link";
 import { Target, Video, TrendingUp, ArrowRight, User } from "lucide-react";
 import { getTwitchBroadcasters } from "../../lib/twitch";
 
+export const dynamic = "force-dynamic";
+
 export default async function AccademiaPage() {
     // Fetch Coach Data directly from Twitch API to ensure up-to-date profile picture
     const streamersData = await getTwitchBroadcasters(["andrixx___"]);

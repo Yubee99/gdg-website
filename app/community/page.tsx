@@ -3,6 +3,8 @@ import { User, Twitch, Shield, ArrowRight, Crown, Star, Zap } from "lucide-react
 import { getTwitchBroadcasters, StreamerInfo } from "../../lib/twitch";
 import { StreamerGrid } from "../../components/StreamerGrid";
 
+export const dynamic = "force-dynamic";
+
 const foundersList = ["its_xmanux", "ema_colcane"];
 const coFoundersStreamersList = ["snakerv_tv"];
 const partnerList: string[] = ["andrixx___"];
